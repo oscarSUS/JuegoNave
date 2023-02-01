@@ -1,32 +1,72 @@
-body { margin: 10px; background-image: url("../imagenes/wall.jpg"); }
+
+ @import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+
+body { 
+    font-family: 'DotGothic16', sans-serif;
+    background-attachment: fixed;
+    margin: 10px; 
+    background-image: url("./imagenes/fondo2.jpg"); 
+}
 
 .container {
     width: 800px;
-    margin: 0 auto;    
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
 }
 
 .barra {
-    background-color: #000000;
+    background-color: rgb(34, 34, 34, 0.7);
     color: #ffffff;
     font-size: 20px;
     height: 20px;
     padding: 20px;
     width: 660px;
+    border-radius: 8px;
+    font-family: 'DotGothic16', sans-serif;
 }
 
-#escenarioNave{
+#mi_canvas{
     background: #000000;
     border: #000 1px solid;
 }
 
 .boton{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+
+#left_btn{
     color: red;
     font-size: 40px;
     background-color: #000000;
     cursor: pointer;
     border-radius: 8px;
     border: 2px solid blue;
+    font-family: 'DotGothic16', sans-serif;
 }
+#fire_btn{
+    color: red;
+    font-size: 40px;
+    background-color: #000000;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 2px solid blue;
+    font-family: 'DotGothic16', sans-serif;
+}
+#right_btn{
+    color: red;
+    font-size: 40px;
+    background-color: #000000;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 2px solid blue;
+    font-family: 'DotGothic16', sans-serif;
+}
+
 .boton:hover{
     background-color: white;
     color: #000000;
