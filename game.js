@@ -41,7 +41,7 @@ function initCanvas(){
         this.w = 100,
         this.h = 100,
         this.direccion,
-        this.bg = "white",
+        this.bg = "orange",
         this.misiles = [];
 
         this.render = function(){
@@ -54,13 +54,31 @@ function initCanvas(){
             else if(this.direccion === 'downArrow'){
                 this.y += 5;
             }
-            if(this.direccion === 'upArrow'){
+            else if(this.direccion === 'upArrow'){
                 this.y -= 5;
+            }
+            else if(this.misiles === 'fire'){
+                
             }
 
             ctx.fillStyle = this.bg;
             ctx.drawImage(BackgroundImage, 0, 0);
             ctx.drawImage(naveImage, this.x, this.y, 100, 90);
+
+            for(let i=0; i < this.misiles.length; i++){
+                let m = this.misiles[i];
+                ctx.fillRect(m.x, m.y -= 5, m.w, m.h);
+                this.hitDetect(m, i);
+                if(m.y <= 0){
+                    this.misiles.splice(i, 1);
+                }
+            }
+        }
+
+        this.hitDetect = function(){
+            for(let i=0; i < enemies.length; i++){
+                let e = enemies[i];
+            }
         }
    }
 
@@ -76,15 +94,19 @@ function initCanvas(){
 
    let animateInterval = setInterval(animate, 6);
 
+    let left_btn = document.getElementById('left_btn');
+    let fire_btn = document.getElementById('fire_btn');
+    let right_btn = document.getElementById('right_btn');
+
    document.addEventListener('keyup', function(event){
-    switch(event.keycode){
+    switch(event.keyCode){
         case teclas.LEFT:
             launcher.x += 0;
             launcher.direccion = '';
         break;
         case teclas.RIGHT:
             launcher.x -= 0;
-            launcher.direccion;
+            launcher.direccion = '';
         break;
         case teclas.UP:
             launcher.y -= 0;
@@ -98,7 +120,7 @@ function initCanvas(){
    })
 
    document.addEventListener('keydown', function(event){
-    switch(event.keycode){
+    switch(event.keyCode){
         case teclas.UP:
             launcher.direccion = 'upArrow'
             if(launcher.y < canvas_H*.2 - 80){
@@ -129,12 +151,37 @@ function initCanvas(){
         break;
         case teclas.P:
             this.location.reload();
+        break;
+        case teclas.SPACE:
+            launcher.misiles.push({
+                x: launcher.x + launcher.w *.5,
+                y: launcher.y,
+                w: 3,
+                h: 10
+            });
     }
 
     console.log(event)
 
    });
 
+    left_btn.addEventListener('mousedown', function(evento){
+        launcher.direccion = 'left'
+    });
+    
+    left_btn.addEventListener('mouseup', function(){
+        launcher.direccion = '';
+    });
+    
+    fire_btn.addEventListener('click', function(){
+        launcher.direccion = 'fire';
+    });
+    right_btn.addEventListener('mousedown', function(){
+        launcher.direccion = 'right';
+    });
+    right_btn.addEventListener('mouseup', function(){
+        launcher.direccion = '';
+    });
   
 }
 
@@ -143,7 +190,8 @@ const teclas = {
     DOWN:40,
     LEFT:37,
     RIGHT:39,
-    P:80
+    P:80,
+    SPACE:32
 };
 
 window.addEventListener('load', function(event) {
