@@ -44,6 +44,8 @@ function initCanvas(){
         this.bg = "orange",
         this.misiles = [];
 
+        
+
         this.render = function(){
             if(this.direccion === 'left'){
                 this.x -= 5;
@@ -73,13 +75,20 @@ function initCanvas(){
                     this.misiles.splice(i, 1);
                 }
             }
+
         }
 
         this.hitDetect = function(){
             for(let i=0; i < enemies.length; i++){
                 let e = enemies[i];
+                let m = this.misiles[i];
+                if(m.x <= e.x + e.w && m.x + m.w >= e.x && m.y >= e.y && m.y <= e.y + e.h){
+                    enemies.splice(i, 1);
+                    document.querySelector('.barra').innerHTML = "Destroyed " + e.id;
+                }
             }
         }
+        
    }
 
    let launcher = new Launcher();
@@ -159,6 +168,7 @@ function initCanvas(){
                 w: 3,
                 h: 10
             });
+
     }
 
     console.log(event)
@@ -173,9 +183,16 @@ function initCanvas(){
         launcher.direccion = '';
     });
     
-    fire_btn.addEventListener('click', function(){
+    fire_btn.addEventListener('click', function()
+    {
+        launcher.misiles.push({
+            x: launcher.x + launcher.w *.5,
+            y: launcher.y,
+            w: 3,
+            h: 10})
         launcher.direccion = 'fire';
     });
+
     right_btn.addEventListener('mousedown', function(){
         launcher.direccion = 'right';
     });
