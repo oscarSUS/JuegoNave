@@ -25,13 +25,23 @@ function initCanvas(){
    }
 
    let enemies = [
-         new enemyTemplate({id : "enemy3", x: 350, y: 50, w: 80, h: 80})
+    new enemyTemplate({id: "enemy1", x: 100, y: -20, w: 80, h: 80 }),
+    new enemyTemplate({id: "enemy2", x: 225, y: -20, w: 80, h: 80 }),
+    new enemyTemplate({id: "enemy3", x: 350, y: -20, w: 80, h: 80 }),
+    new enemyTemplate({id: "enemy4", x:100,  y:-70,  w:80,  h: 80}),
+    new enemyTemplate({id: "enemy5", x:225,  y:-70,  w:80,  h: 80}),
+    new enemyTemplate({id: "enemy6", x:350,  y:-70,  w:80,  h: 80}),
+    new enemyTemplate({id: "enemy7", x:475,  y:-70,  w:80,  h: 80}),
+    new enemyTemplate({id: "enemy8", x:600,  y:-70,  w:80,  h: 80}),
+    new enemyTemplate({id: "enemy9", x:475,  y:-20,  w:80,  h: 80}),
+    new enemyTemplate({id: "enemy10",x: 600, y: -20, w: 80, h: 80}),
    ];
 
    const renderEnemies = function(enemylist){
     for(let i= 0; i < enemylist.length; i++){
         let enemy = enemylist[i];
         ctx.drawImage(enemy.image, enemy.x, enemy.y += .5, enemy.w, enemy.h);
+        launcher.hitDetectLowerLevel(enemy);
     }
    }
 
@@ -44,7 +54,9 @@ function initCanvas(){
         this.bg = "orange",
         this.misiles = [];
 
-        
+        this.gameStatus = {
+            over: false,
+        }
 
         this.render = function(){
             if(this.direccion === 'left'){
@@ -76,6 +88,10 @@ function initCanvas(){
                 }
             }
 
+            if(enemies.length === 0){
+                clearInterval(animateInterval);
+                document.querySelector('.barra').innerHTML = "¡YOU WIN!"
+            }
         }
 
         this.hitDetect = function(){
@@ -86,6 +102,21 @@ function initCanvas(){
                     enemies.splice(i, 1);
                     document.querySelector('.barra').innerHTML = "Destroyed " + e.id;
                 }
+            }
+        }
+
+        this.hitDetectLowerLevel = function(enemy){
+            if(enemy.y > 550){
+                this.gameStatus.over = true;
+                document.querySelector('.barra').innerHTML = 'Enemy have passed!';
+            }
+            if((enemy.x < this.x + 55 && enemy.x > this.x - 55) && (enemy.y < this.y + 50 && enemy.y > this.y - 50)){
+                this.gameStatus.over = true;
+                document.querySelector('.barra').innerHTML = '¡YOU DIED!';
+            }
+
+            if(this.gameStatus.over === true){
+                clearInterval(animateInterval);
             }
         }
         
@@ -173,9 +204,9 @@ function initCanvas(){
 
     console.log(event)
 
-   });
-
-    left_btn.addEventListener('mousedown', function(evento){
+   }); 
+   
+   left_btn.addEventListener('mousedown', function(evento){
         launcher.direccion = 'left'
     });
     
