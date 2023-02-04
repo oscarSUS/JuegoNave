@@ -25,16 +25,29 @@ function initCanvas(){
    }
 
    let enemies = [
-    new enemyTemplate({id: "enemy1", x: 100, y: -20, w: 80, h: 80 }),
-    new enemyTemplate({id: "enemy2", x: 225, y: -20, w: 80, h: 80 }),
-    new enemyTemplate({id: "enemy3", x: 350, y: -20, w: 80, h: 80 }),
-    new enemyTemplate({id: "enemy4", x:100,  y:-70,  w:80,  h: 80}),
-    new enemyTemplate({id: "enemy5", x:225,  y:-70,  w:80,  h: 80}),
-    new enemyTemplate({id: "enemy6", x:350,  y:-70,  w:80,  h: 80}),
-    new enemyTemplate({id: "enemy7", x:475,  y:-70,  w:80,  h: 80}),
-    new enemyTemplate({id: "enemy8", x:600,  y:-70,  w:80,  h: 80}),
-    new enemyTemplate({id: "enemy9", x:475,  y:-20,  w:80,  h: 80}),
-    new enemyTemplate({id: "enemy10",x: 600, y: -20, w: 80, h: 80}),
+    new enemyTemplate({id : "enemy1", x: 100, y: -20, w: 80, h: 80}),
+    new enemyTemplate({id : "enemy2", x: 225, y: -20, w: 80, h: 80}),
+    new enemyTemplate({id : "enemy3", x: 350, y: -20, w: 80, h: 80}),
+    new enemyTemplate({id : "enemy4", x: 100, y: -70, w: 80, h: 80}),
+    new enemyTemplate({id : "enemy5", x: 225, y: -70, w: 80, h: 80}),
+    new enemyTemplate({id : "enemy6", x: 350, y: -70, w: 80, h: 80}),
+    new enemyTemplate({id : "enemy7", x: 475, y: -70, w: 80, h: 80}),
+    new enemyTemplate({id : "enemy8", x: 600, y: -70, w: 80, h: 80}),
+    new enemyTemplate({id : "enemy9", x: 475, y: -20, w: 80, h: 80}),
+    new enemyTemplate({id : "enemy10", x: 600, y: -20, w: 80, h: 80}),
+
+    // Segundo grupo de enemigos
+    new enemyTemplate({ id: "enemy11", x: 100, y: -200, w: 50, h: 50, image: enemiespic2 }),
+    new enemyTemplate({ id: "enemy12", x: 225, y: -200, w: 50, h: 50, image: enemiespic2 }),
+    new enemyTemplate({ id: "enemy13", x: 350, y: -200, w: 50, h: 50, image: enemiespic2 }),
+    new enemyTemplate({ id: "enemy14", x: 100, y: -270, w: 50, h: 50, image: enemiespic2 }),
+    new enemyTemplate({ id: "enemy15", x: 225, y: -270, w: 50, h: 50, image: enemiespic2 }),
+    new enemyTemplate({ id: "enemy16", x: 350, y: -270, w: 50, h: 50, image: enemiespic2 }),
+    new enemyTemplate({ id: "enemy17", x: 475, y: -270, w: 50, h: 50, image: enemiespic2 }),
+    new enemyTemplate({ id: "enemy18", x: 600, y: -270, w: 50, h: 50, image: enemiespic2 }),
+    new enemyTemplate({ id: "enemy19", x: 475, y: -200, w: 50, h: 50, image: enemiespic2 }),
+    new enemyTemplate({ id: "enemy20", x: 600, y: -200, w: 50, h: 50, image: enemiespic2 })
+
    ];
 
    const renderEnemies = function(enemylist){
@@ -90,20 +103,22 @@ function initCanvas(){
 
             if(enemies.length === 0){
                 clearInterval(animateInterval);
-                document.querySelector('.barra').innerHTML = "¡YOU WIN!"
+                document.querySelector('.barra').innerHTML = "¡YOU WIN!";
             }
         }
 
-        this.hitDetect = function(){
+        this.hitDetect = function(m, mi){
             for(let i=0; i < enemies.length; i++){
                 let e = enemies[i];
-                let m = this.misiles[i];
                 if(m.x <= e.x + e.w && m.x + m.w >= e.x && m.y >= e.y && m.y <= e.y + e.h){
+                    this.misiles.splice(this.misiles[mi],1);
                     enemies.splice(i, 1);
                     document.querySelector('.barra').innerHTML = "Destroyed " + e.id;
                 }
             }
+            
         }
+        console.log(this.hitDetect)
 
         this.hitDetectLowerLevel = function(enemy){
             if(enemy.y > 550){
